@@ -1,0 +1,27 @@
+# Moodle-specific ignores
+# Ignore the main Moodle config file, but not theme/plugin configs.
+/moodle/config.php
+moodledata/
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build artifacts and downloads
+downloads/
+
+# Backup files
+*.bak
+
+# Temporary test files
+create_fs_files.php
+fs_test.php
+db_test.php
+
+
+# Project-specific ignores
+.vscode/
+moodle-dev.code-workspace
+README.md
+/ui/
+/backups-lcl/
