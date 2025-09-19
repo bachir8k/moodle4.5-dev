@@ -6,7 +6,7 @@ This guide provides details about the configuration of Moodle, Nginx, PostgreSQL
 
 ## Docker Environment
 
-The `docker-compose.yml` file is configured to use high-performance named volumes for the Moodle source code and data.
+The `moodle4.5/docker-compose.yml` file is configured to use high-performance named volumes for the Moodle source code and data.
 
 *   **`moodle-code`:** A named volume containing the Moodle PHP source code. This code is copied into the volume from the Docker image during the initial build, which provides a significant performance improvement over sharing files from the host machine.
 *   **`moodledata`:** A named volume for Moodle's data directory. This directory stores user files, cache, and session data.

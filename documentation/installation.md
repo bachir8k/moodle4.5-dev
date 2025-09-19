@@ -27,7 +27,7 @@ First, modify two files to prepare the environment for using named volumes.
 
 **1. Edit `php/Dockerfile`**
 
-Add the following lines to the end of the `php/Dockerfile`. This copies the Moodle source code into the image itself and sets the correct initial permissions.
+Add the following lines to the end of the `moodle4.5/php/Dockerfile`. This copies the Moodle source code into the image itself and sets the correct initial permissions.
 
 ```dockerfile
 # Copy Moodle source code and set permissions
@@ -39,7 +39,7 @@ RUN chown -R www-data:www-data /var/www/html
 
 Update the `build` context for the `moodle-php` service and replace all bind mounts for `moodle` and `moodledata` with named volumes.
 
-Your final `docker-compose.yml` should look like this:
+The `moodle4.5/docker-compose.yml` file is configured to use high-performance named volumes for the Moodle source code and data.
 
 ```yaml
 services:
@@ -50,7 +50,7 @@ services:
       - "9000:80"
     volumes:
       - moodle-code:/var/www/html
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./moodle4.5/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - moodle-php
 
@@ -58,7 +58,7 @@ services:
     container_name: moodle-php
     build:
       context: .
-      dockerfile: ./php/Dockerfile
+      dockerfile: ./moodle4.5/php/Dockerfile
     volumes:
       - moodle-code:/var/www/html
       - moodledata:/var/www/moodledata
@@ -87,7 +87,7 @@ volumes:
 
 ### Step 2: Build and Start the Environment
 
-1.  **IMPORTANT:** Ensure no `config.php` file exists in your local `d:\moodle-dev\moodle` directory before building.
+1.  **IMPORTANT:** Ensure no `config.php` file exists in your local `d:\moodle-dev\moodle4.5\moodle` directory before building.
 2.  Tear down any old environment and build the new image:
     ```bash
     docker-compose down -v

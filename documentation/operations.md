@@ -14,7 +14,7 @@ This is a manual process that involves backing up the data from the source (loca
 
 The database contains all course structure, settings, user information, grades, and forum posts.
 
-1.  **Export Local Database:** Create a compressed SQL dump of your local PostgreSQL database. You can do this by executing the following command against your local `moodle-db` container:
+1.  **Export Local Database:** Create a compressed SQL dump of your local PostgreSQL database. You can do this by executing the following command against your local `moodle-db` container (run this from the `moodle4.5` directory):
     ```bash
     docker-compose exec -T moodle-db pg_dump -U moodle -d moodle | gzip > moodle-database.sql.gz
     ```
@@ -23,7 +23,7 @@ The database contains all course structure, settings, user information, grades, 
     *   First, drop the existing database on the server to ensure a clean import.
     *   Then, import the backup file into the server's PostgreSQL container.
     ```bash
-    # Example commands to be run on the server
+    # Example commands to be run on the server (from the moodle4.5 directory)
     docker-compose exec -T moodle-db dropdb -U moodle moodle
     docker-compose exec -T moodle-db createdb -U moodle moodle
     gunzip < moodle-database.sql.gz | docker-compose exec -T moodle-db psql -U moodle -d moodle
@@ -43,7 +43,7 @@ The `moodledata` directory contains all user-uploaded files, course materials (v
     *   First, ensure the existing `moodledata` directory on the server is empty.
     *   Then, extract the backup into the server's `moodledata` volume.
     ```bash
-    # Example commands to be run on the server
+    # Example commands to be run on the server (from the moodle4.5 directory)
     # 1. Remove existing data
     docker run --rm --volumes-from moodle-php -v $(pwd):/backup ubuntu rm -rf /var/www/moodledata/*
     # 2. Extract new data
