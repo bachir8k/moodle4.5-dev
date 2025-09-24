@@ -39,18 +39,18 @@ fi
 # --- Restore Database ---
 echo "Restoring PostgreSQL database..."
 # Drop and recreate the database to ensure it's clean
-docker-compose exec -T moodle-db psql -U moodle -c "DROP DATABASE IF EXISTS moodle;" > /dev/null
-docker-compose exec -T moodle-db psql -U moodle -c "CREATE DATABASE moodle WITH OWNER moodle;" > /dev/null
+docker-compose exec -T moodle4.5-db psql -U moodle45 -c "DROP DATABASE IF EXISTS moodle45;" > /dev/null
+docker-compose exec -T moodle4.5-db psql -U moodle45 -c "CREATE DATABASE moodle45 WITH OWNER moodle45;" > /dev/null
 # Restore the database from the backup file
-cat backups-lcl/moodle-db-backup.$TIMESTAMP.sql | docker-compose exec -T moodle-db psql -U moodle -d moodle
+cat backups-lcl/moodle-db-backup.$TIMESTAMP.sql | docker-compose exec -T moodle4.5-db psql -U moodle45 -d moodle45
 echo "Database restore complete."
 
 # --- Restore Moodle Data ---
 echo "Restoring moodledata directory..."
 # Clean the moodledata directory
-docker-compose exec -T moodle-php sh -c "rm -rf /var/www/moodledata/* && rm -rf /var/www/moodledata/..?* /var/www/moodledata/.[!.]*"
+docker-compose exec -T moodle4.5-php sh -c "rm -rf /var/www/moodledata/* && rm -rf /var/www/moodledata/..?* /var/www/moodledata/.[!.]*"
 # Extract the backup into the moodledata directory
-cat backups-lcl/moodledata-backup.$TIMESTAMP.tar.gz | docker-compose exec -T moodle-php tar -xzf - -C /
+cat backups-lcl/moodledata-backup.$TIMESTAMP.tar.gz | docker-compose exec -T moodle4.5-php tar -xzf - -C /
 echo "Moodle data restore complete."
 
 echo "

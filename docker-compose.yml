@@ -1,41 +1,41 @@
 services:
-  moodle-nginx:
+  moodle4.5-nginx:
     image: nginx:latest
-    container_name: moodle-nginx
+    container_name: moodle4.5-nginx
     ports:
       - "9000:80"
     volumes:
-      - moodle-code:/var/www/html
+      - moodle4.5-code:/var/www/html
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - moodle-php
+      - moodle4.5-php
 
-  moodle-php:
-    container_name: moodle-php
+  moodle4.5-php:
+    container_name: moodle4.5-php
     build:
       context: .
       dockerfile: ./php/Dockerfile
     volumes:
-      - moodle-code:/var/www/html
-      - moodledata:/var/www/moodledata
+      - moodle4.5-code:/var/www/html
+      - moodle4.5-data:/var/www/moodledata
     depends_on:
-      - moodle-db
+      - moodle4.5-db
     restart: always
 
-  moodle-db:
+  moodle4.5-db:
     image: postgres:15
-    container_name: moodle-db
+    container_name: moodle4.5-db
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - moodle4.5-postgres-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=moodle
+      - POSTGRES_USER=moodle45
       - POSTGRES_PASSWORD=w9zR5@y#sE!vP_r8k
-      - POSTGRES_DB=moodle
+      - POSTGRES_DB=moodle45
     ports:
       - "5432:5432"
     restart: always
 
 volumes:
-  postgres-data:
-  moodle-code:
-  moodledata:
+  moodle4.5-postgres-data:
+  moodle4.5-code:
+  moodle4.5-data:

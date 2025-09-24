@@ -15,12 +15,12 @@ echo "Configuration files backed up."
 
 # --- Backup Database ---
 echo "Backing up PostgreSQL database..."
-docker-compose exec -T moodle-db pg_dump -U moodle -d moodle > backups-lcl/moodle-db-backup.$TIMESTAMP.sql
+docker-compose exec -T moodle4.5-db pg_dump -U moodle45 -d moodle45 > backups-lcl/moodle-db-backup.$TIMESTAMP.sql
 echo "Database backup complete."
 
 # --- Backup Moodle Data ---
 echo "Backing up moodledata directory..."
-docker-compose exec -T moodle-php tar -czf - /var/www/moodledata > backups-lcl/moodledata-backup.$TIMESTAMP.tar.gz
+docker-compose exec -T moodle4.5-php tar -czf - /var/www/moodledata > backups-lcl/moodledata-backup.$TIMESTAMP.tar.gz
 echo "Moodle data backup complete."
 
 echo "Checkpoint created successfully."
