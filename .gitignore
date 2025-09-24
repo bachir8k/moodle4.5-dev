@@ -1,3 +1,6 @@
+.vscode/
+*.code-workspace
+
 # Moodle-specific ignores
 # Ignore the main Moodle config file, but not theme/plugin configs.
 /moodle/config.php
@@ -20,8 +23,4 @@ db_test.php
 
 
 # Project-specific ignores
-.vscode/
-moodle-dev.code-workspace
-README.md
-/ui/
 /backups-lcl/
